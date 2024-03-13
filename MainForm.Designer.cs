@@ -19,6 +19,7 @@ namespace Test
         private Label outputPathLabel;
         private ListBox outputListBox;
 
+        // Инициализация и настройка компонентов формы
         private void InitializeComponent()
         {
             xmlOpenButton = new Button();

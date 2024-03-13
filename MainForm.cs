@@ -24,6 +24,7 @@ namespace Test
         {
             if (xmlOpenDialog.ShowDialog() == DialogResult.OK)
             {
+                // Установка пути ко входному XML-файлу в Label
                 xmlPathLabel.Text = xmlOpenDialog.FileName;
             }
         }
@@ -31,6 +32,7 @@ namespace Test
         {
             if (xslOpenDialog.ShowDialog() == DialogResult.OK)
             {
+                // Установка пути к XSL файлу в Label
                 xslPathLabel.Text = xslOpenDialog.FileName;
             }
         }
@@ -38,13 +40,14 @@ namespace Test
         {
             if (outputSaveDialog.ShowDialog() == DialogResult.OK)
             {
+                // Добавление расширения к пути, а также установка пути к выходному файлу в Label
                 outputSaveDialog.FileName = Path.ChangeExtension(outputSaveDialog.FileName, ".xml");
                 outputPathLabel.Text = outputSaveDialog.FileName;
             }
         }
         private void TransformButton_Click(object sender, EventArgs e)
         {
-            // Проверяется, все ли файлы были выбраны
+            // Проверяется, все ли пути пропписаны
             if (IsFileSelected(xmlOpenDialog, ".xml"))
             {
                 MessageBox.Show("XML-файл не выбран", "Файл не выбран");
@@ -61,6 +64,7 @@ namespace Test
                 return;
             }
 
+            // Поэтапное выполнение поставленной задачи
             ConvertXML();
             ModifyOutput(out XmlNodeList groupNodes);
             ModifyInput(out XmlNode listNode);
@@ -68,7 +72,7 @@ namespace Test
         }
         private void ConvertXML()
         {
-            // Преобразование
+            // Преобразование входного XML-файла к выходному
             XslCompiledTransform xslt = new XslCompiledTransform();
             xslt.Load(xslOpenDialog.FileName);
             xslt.Transform(xmlOpenDialog.FileName, outputSaveDialog.FileName);
@@ -120,6 +124,7 @@ namespace Test
         }
         private bool IsFileSelected(OpenFileDialog openFileDialog, string extension)
         {
+            // Проверяется, установлен ли валидный путь в OpenFileDialog
             return string.IsNullOrEmpty(openFileDialog.FileName) || !Path.GetExtension(openFileDialog.FileName).Equals(extension);
         }
     }
